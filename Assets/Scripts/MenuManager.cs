@@ -9,7 +9,7 @@ public class MenuManager : MonoBehaviour
     //empezar juego
     public void Botonempezar()
     { 
-        SceneManager.LoadScene("Principal");
+        SceneManager.LoadScene("Primer nivel");
     }
 
     //salir del juego

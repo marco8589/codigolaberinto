@@ -11,6 +11,8 @@ public class Jugador : MonoBehaviour
     public float velocidad = 5.0f;
     public Text puntajemonedas;
     public Text ganaste;
+    public int nivel;
+    bool victoria = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,31 @@ public class Jugador : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            SceneManager.LoadScene("Principal");
+            switch (nivel)
+            {
+                case 1:
+                    if (victoria==true)
+                    {
+                        SceneManager.LoadScene("Segundo nivel");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Primer nivel");
+                    }
+                    break;
+                case 2:
+                    if (victoria == true)
+                    {
+                        SceneManager.LoadScene("Primer nivel");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Segundo nivel");
+                    }
+                    break;
+            }
+
+          
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -53,17 +79,43 @@ public class Jugador : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemigos")
         {
-            SceneManager.LoadScene("Principal");
+            switch (nivel)
+            {
+                case 1:
+                    SceneManager.LoadScene("Primer nivel");
+                    break;
+                case 2:
+                    SceneManager.LoadScene("Segundo nivel");
+                    break;
+            }
+          //  SceneManager.LoadScene("Principal");
         }        
         if (collision.gameObject.tag == "Monedas")
         {
             Destroy(collision.gameObject);
             puntaje++;
             puntajemonedas.text = "Monedas: " + puntaje;
-            if (puntaje == 5)
+
+            switch (nivel)
             {
-                ganaste.text = "Ganaste! \n Click para reiniciar";
+                case 1:
+                    if (puntaje == 4)
+                    {
+                        ganaste.text = "Ganaste El Primer Nivel!!! \n Click Para Ir Al Siguiente Nivel";
+                        victoria = true;
+                     
+                    }
+                    break;
+                case 2:
+                    if (puntaje == 5)
+                    {
+                        ganaste.text = "Ganaste! \n Click para reiniciar";
+                        victoria = true;
+                    }
+                    break;
             }
+
+ 
         }
         if (collision.gameObject.tag == "Paredes")
         {
